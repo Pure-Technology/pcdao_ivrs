@@ -1,6 +1,6 @@
-package com.example.ivrs.repositories;
+package com.ivrs.repositories;
 
-import com.example.ivrs.entities.primary.UserAuth;
+import com.ivrs.entities.UserAuth;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

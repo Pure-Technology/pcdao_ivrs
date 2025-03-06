@@ -1,9 +1,15 @@
-package com.example.ivrs.entities.primary;
+package com.ivrs.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "pcda_ivrs_register")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserAuth {
 
     @Id

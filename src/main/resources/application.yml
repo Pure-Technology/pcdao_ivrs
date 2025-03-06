@@ -1,0 +1,48 @@
+server:
+  port: 19000
+
+spring:
+  application:
+    name: Reference-Data-Application-Service
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    falcon:
+      url: jdbc:postgresql://localhost:5432/ivrs_db
+      username: postgres
+      password: pcda
+      driver-class-name: org.postgresql.Driver
+      hikari:
+        maximum-pool-size: 10
+        minimum-idle: 2
+        idle-timeout: 30000
+        max-lifetime: 1800000
+        connection-timeout: 30000
+    pcdao-ivrs:
+      url: jdbc:postgresql://localhost:5432/pcda_ivrs_2
+      username: postgres
+      password: pcda
+      driver-class-name: org.postgresql.Driver
+      hikari:
+        maximum-pool-size: 5
+        minimum-idle: 1
+        idle-timeout: 30000
+        max-lifetime: 1800000
+        connection-timeout: 30000
+
+  jpa:
+    properties:
+      hibernate:
+        temp.use_jdbc_metadata_defaults: false
+    falcon:
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      hibernate:
+        ddl-auto: update
+        show-sql: true
+        format_sql: true
+    pcdao-ivrs:
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      hibernate:
+        ddl-auto: update
+        show-sql: true
+        format_sql: true

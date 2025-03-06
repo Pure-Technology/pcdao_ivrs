@@ -1,4 +1,4 @@
-package com.example.ivrs;
+package com.ivrs;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
