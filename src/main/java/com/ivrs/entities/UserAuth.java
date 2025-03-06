@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class UserAuth {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "srno")
     private Long srno;
 

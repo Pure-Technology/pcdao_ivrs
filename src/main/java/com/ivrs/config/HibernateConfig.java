@@ -42,21 +42,25 @@ public class HibernateConfig {
     @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
             EntityManagerFactoryBuilder builder) {
-        return builder
+        LocalContainerEntityManagerFactoryBean factoryBean = builder
                 .dataSource(falconDataSource())
                 .packages("com.ivrs.entities")
                 .persistenceUnit("falconPU")
                 .build();
+        factoryBean.getJpaPropertyMap().put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+        return factoryBean;
     }
 
     @Bean(name = "pcdaoEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean pcdaoEntityManagerFactory(
             EntityManagerFactoryBuilder builder) {
-        return builder
+        LocalContainerEntityManagerFactoryBean factoryBean = builder
                 .dataSource(pcdaoDataSource())
                 .packages("com.ivrs.entities")
                 .persistenceUnit("pcdaoPU")
                 .build();
+        factoryBean.getJpaPropertyMap().put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+        return factoryBean;
     }
 
     @Primary
