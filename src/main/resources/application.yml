@@ -8,7 +8,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     falcon:
-      url: jdbc:postgresql://localhost:5432/ivrs_db
+      url: jdbc:postgresql://localhost:5432/pcda_ivrs
       username: postgres
       password: pcda
       driver-class-name: org.postgresql.Driver

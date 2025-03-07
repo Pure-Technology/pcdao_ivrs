@@ -92,6 +92,9 @@ public class IvrsServiceImpl implements IvrsService {
                         case DSOP_FUND_BALANCE:
                             responseDTO = getDsopFundBalanceDetails(cdaAccNo);
                             break;
+                        case DSOP_WITHDRAWAL:
+                            responseDTO = getDSOPWithdrawalDetails(cdaAccNo);
+                            break;
                         case TRANSPORTATION_CLAIMS:
                             responseDTO = getTransportationClaimDetails(cdaAccNo);
                             break;
@@ -167,7 +170,15 @@ public class IvrsServiceImpl implements IvrsService {
         return responseDTO;
     }
 
-
+    private Object getDSOPWithdrawalDetails(String cdaAccNo) {
+        DsopWithdrawalResponseDTO responseDTO = new DsopWithdrawalResponseDTO();
+        try {
+            responseDTO = ivrsDao.getDSOPWithdrawalDetails(cdaAccNo, responseDTO);
+        } catch (Exception e) {
+            log.error("Exception while getting dsop fund balance details for cda account no : ".concat(cdaAccNo), e);
+        }
+        return responseDTO;
+    }
     private CommonEnum getServiceEnumFromString(String serviceType) {
         for (CommonEnum serviceEnum : CommonEnum.values()) {
             if (serviceEnum.getValue().equalsIgnoreCase(serviceType)) {
