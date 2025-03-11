@@ -46,5 +46,83 @@ public class Earning {
     @Column(name = "round_off_amount", nullable = false)
     private Boolean roundOffAmount;
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getFkEmployee() {
+        return fkEmployee;
+    }
+
+    public void setFkEmployee(Long fkEmployee) {
+        this.fkEmployee = fkEmployee;
+    }
+
+    public Integer getFkPayCode() {
+        return fkPayCode;
+    }
+
+    public void setFkPayCode(Integer fkPayCode) {
+        this.fkPayCode = fkPayCode;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public Integer getRate() {
+        return rate;
+    }
+
+    public void setRate(Integer rate) {
+        this.rate = rate;
+    }
+
+    public String getMonthEnding() {
+        return monthEnding;
+    }
+
+    public void setMonthEnding(String monthEnding) {
+        this.monthEnding = monthEnding;
+    }
+
+    public LocalDate getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(LocalDate fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public LocalDate getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(LocalDate toDate) {
+        this.toDate = toDate;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Boolean getRoundOffAmount() {
+        return roundOffAmount;
+    }
+
+    public void setRoundOffAmount(Boolean roundOffAmount) {
+        this.roundOffAmount = roundOffAmount;
+    }
 }

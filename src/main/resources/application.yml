@@ -1,5 +1,5 @@
 server:
-  port: 19000
+  port: 8000
 
 spring:
   application:
@@ -7,10 +7,14 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/ivrs_auth  # Default Datasource (required)
+    username: postgres
+    password: Puretech@18
+
     falcon:
-      url: jdbc:postgresql://localhost:5432/pcda_ivrs
+      jdbc-url: jdbc:postgresql://localhost:5432/ivrs_db
       username: postgres
-      password: pcda
+      password: Puretech@18
       driver-class-name: org.postgresql.Driver
       hikari:
         maximum-pool-size: 10
@@ -18,10 +22,11 @@ spring:
         idle-timeout: 30000
         max-lifetime: 1800000
         connection-timeout: 30000
+
     pcdao-ivrs:
-      url: jdbc:postgresql://localhost:5432/pcda_ivrs_2
+      jdbc-url: jdbc:postgresql://localhost:5432/ivrs_auth
       username: postgres
-      password: pcda
+      password: Puretech@18
       driver-class-name: org.postgresql.Driver
       hikari:
         maximum-pool-size: 5

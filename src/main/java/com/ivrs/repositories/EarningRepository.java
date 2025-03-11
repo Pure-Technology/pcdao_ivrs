@@ -14,4 +14,8 @@ public interface EarningRepository extends JpaRepository<Earning, Long> {
 
     List<Earning> findByFkEmployeeAndFkPayCode(@Param("fkEmployee") Long fkEmployee, @Param("fkPayCode") Integer fkPayCode);
 
+    List<Earning> findByFkEmployeeAndFkPayCodeAndMonthEnding(@Param("fkEmployee") Long fkEmployee,
+                                                                @Param("fkPayCode") Integer fkPayCode,
+                                                                @Param("monthEnding") String monthEnding);
+
 }

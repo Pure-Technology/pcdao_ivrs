@@ -250,4 +250,620 @@ public class PaySummary {
 
     @Column(name = "rank_code")
     private Integer rankCode;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getFkDak() {
+        return fkDak;
+    }
+
+    public void setFkDak(Long fkDak) {
+        this.fkDak = fkDak;
+    }
+
+    public Long getFkEmployee() {
+        return fkEmployee;
+    }
+
+    public void setFkEmployee(Long fkEmployee) {
+        this.fkEmployee = fkEmployee;
+    }
+
+    public String getCheckDigit() {
+        return checkDigit;
+    }
+
+    public void setCheckDigit(String checkDigit) {
+        this.checkDigit = checkDigit;
+    }
+
+    public String getCdaoNo() {
+        return cdaoNo;
+    }
+
+    public void setCdaoNo(String cdaoNo) {
+        this.cdaoNo = cdaoNo;
+    }
+
+    public Integer getFkEmployeeCategory() {
+        return fkEmployeeCategory;
+    }
+
+    public void setFkEmployeeCategory(Integer fkEmployeeCategory) {
+        this.fkEmployeeCategory = fkEmployeeCategory;
+    }
+
+    public String getMonthEnding() {
+        return monthEnding;
+    }
+
+    public void setMonthEnding(String monthEnding) {
+        this.monthEnding = monthEnding;
+    }
+
+    public Integer getGrossPay() {
+        return grossPay;
+    }
+
+    public void setGrossPay(Integer grossPay) {
+        this.grossPay = grossPay;
+    }
+
+    public Integer getFund() {
+        return fund;
+    }
+
+    public void setFund(Integer fund) {
+        this.fund = fund;
+    }
+
+    public Integer getCourtAttachment() {
+        return courtAttachment;
+    }
+
+    public void setCourtAttachment(Integer courtAttachment) {
+        this.courtAttachment = courtAttachment;
+    }
+
+    public Integer getPli() {
+        return pli;
+    }
+
+    public void setPli(Integer pli) {
+        this.pli = pli;
+    }
+
+    public Integer getIncomeTax() {
+        return incomeTax;
+    }
+
+    public void setIncomeTax(Integer incomeTax) {
+        this.incomeTax = incomeTax;
+    }
+
+    public Integer getDebitAdjustment() {
+        return debitAdjustment;
+    }
+
+    public void setDebitAdjustment(Integer debitAdjustment) {
+        this.debitAdjustment = debitAdjustment;
+    }
+
+    public Integer getAgis() {
+        return agis;
+    }
+
+    public void setAgis(Integer agis) {
+        this.agis = agis;
+    }
+
+    public Integer getLoans() {
+        return loans;
+    }
+
+    public void setLoans(Integer loans) {
+        this.loans = loans;
+    }
+
+    public Integer getTotalDebits() {
+        return totalDebits;
+    }
+
+    public void setTotalDebits(Integer totalDebits) {
+        this.totalDebits = totalDebits;
+    }
+
+    public Integer getRankCode() {
+        return rankCode;
+    }
+
+    public void setRankCode(Integer rankCode) {
+        this.rankCode = rankCode;
+    }
+
+    public Integer getRankLevel() {
+        return rankLevel;
+    }
+
+    public void setRankLevel(Integer rankLevel) {
+        this.rankLevel = rankLevel;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+    public Integer getTask() {
+        return task;
+    }
+
+    public void setTask(Integer task) {
+        this.task = task;
+    }
+
+    public LocalDate getFsDate() {
+        return fsDate;
+    }
+
+    public void setFsDate(LocalDate fsDate) {
+        this.fsDate = fsDate;
+    }
+
+    public String getEncashReleaseMe() {
+        return encashReleaseMe;
+    }
+
+    public void setEncashReleaseMe(String encashReleaseMe) {
+        this.encashReleaseMe = encashReleaseMe;
+    }
+
+    public Integer getEncashReleased() {
+        return encashReleased;
+    }
+
+    public void setEncashReleased(Integer encashReleased) {
+        this.encashReleased = encashReleased;
+    }
+
+    public String getCrbalDebitMe() {
+        return crbalDebitMe;
+    }
+
+    public void setCrbalDebitMe(String crbalDebitMe) {
+        this.crbalDebitMe = crbalDebitMe;
+    }
+
+    public Integer getEncashPaid() {
+        return encashPaid;
+    }
+
+    public void setEncashPaid(Integer encashPaid) {
+        this.encashPaid = encashPaid;
+    }
+
+    public Integer getEncashTotal() {
+        return encashTotal;
+    }
+
+    public void setEncashTotal(Integer encashTotal) {
+        this.encashTotal = encashTotal;
+    }
+
+    public Integer getEncashWithheld() {
+        return encashWithheld;
+    }
+
+    public void setEncashWithheld(Integer encashWithheld) {
+        this.encashWithheld = encashWithheld;
+    }
+
+    public String getCorpsCode() {
+        return corpsCode;
+    }
+
+    public void setCorpsCode(String corpsCode) {
+        this.corpsCode = corpsCode;
+    }
+
+    public String getExpFlag() {
+        return expFlag;
+    }
+
+    public void setExpFlag(String expFlag) {
+        this.expFlag = expFlag;
+    }
+
+    public Integer getTotalCrBalAmount() {
+        return totalCrBalAmount;
+    }
+
+    public void setTotalCrBalAmount(Integer totalCrBalAmount) {
+        this.totalCrBalAmount = totalCrBalAmount;
+    }
+
+    public Integer getPermCrBalAmount() {
+        return permCrBalAmount;
+    }
+
+    public void setPermCrBalAmount(Integer permCrBalAmount) {
+        this.permCrBalAmount = permCrBalAmount;
+    }
+
+    public Integer getMpsBatch() {
+        return mpsBatch;
+    }
+
+    public void setMpsBatch(Integer mpsBatch) {
+        this.mpsBatch = mpsBatch;
+    }
+
+    public Integer getBatch() {
+        return batch;
+    }
+
+    public void setBatch(Integer batch) {
+        this.batch = batch;
+    }
+
+    public Integer getAfmso() {
+        return afmso;
+    }
+
+    public void setAfmso(Integer afmso) {
+        this.afmso = afmso;
+    }
+
+    public Integer getAgifFlpay() {
+        return agifFlpay;
+    }
+
+    public void setAgifFlpay(Integer agifFlpay) {
+        this.agifFlpay = agifFlpay;
+    }
+
+    public Integer getDsopFlpay() {
+        return dsopFlpay;
+    }
+
+    public void setDsopFlpay(Integer dsopFlpay) {
+        this.dsopFlpay = dsopFlpay;
+    }
+
+    public Integer getTagif() {
+        return tagif;
+    }
+
+    public void setTagif(Integer tagif) {
+        this.tagif = tagif;
+    }
+
+    public Integer getCgeis() {
+        return cgeis;
+    }
+
+    public void setCgeis(Integer cgeis) {
+        this.cgeis = cgeis;
+    }
+
+    public String getCrBalDakid() {
+        return crBalDakid;
+    }
+
+    public void setCrBalDakid(String crBalDakid) {
+        this.crBalDakid = crBalDakid;
+    }
+
+    public Integer getCrBalAo() {
+        return crBalAo;
+    }
+
+    public void setCrBalAo(Integer crBalAo) {
+        this.crBalAo = crBalAo;
+    }
+
+    public Integer getCrBalAao() {
+        return crBalAao;
+    }
+
+    public void setCrBalAao(Integer crBalAao) {
+        this.crBalAao = crBalAao;
+    }
+
+    public Integer getCrBalAud() {
+        return crBalAud;
+    }
+
+    public void setCrBalAud(Integer crBalAud) {
+        this.crBalAud = crBalAud;
+    }
+
+    public LocalDate getCrBalAoDate() {
+        return crBalAoDate;
+    }
+
+    public void setCrBalAoDate(LocalDate crBalAoDate) {
+        this.crBalAoDate = crBalAoDate;
+    }
+
+    public LocalDate getCrBalAaoDate() {
+        return crBalAaoDate;
+    }
+
+    public void setCrBalAaoDate(LocalDate crBalAaoDate) {
+        this.crBalAaoDate = crBalAaoDate;
+    }
+
+    public String getCrBalReason() {
+        return crBalReason;
+    }
+
+    public void setCrBalReason(String crBalReason) {
+        this.crBalReason = crBalReason;
+    }
+
+    public LocalDate getCrBalAudDate() {
+        return crBalAudDate;
+    }
+
+    public void setCrBalAudDate(LocalDate crBalAudDate) {
+        this.crBalAudDate = crBalAudDate;
+    }
+
+    public String getCrBalStatus() {
+        return crBalStatus;
+    }
+
+    public void setCrBalStatus(String crBalStatus) {
+        this.crBalStatus = crBalStatus;
+    }
+
+    public LocalDate getCrBalDate() {
+        return crBalDate;
+    }
+
+    public void setCrBalDate(LocalDate crBalDate) {
+        this.crBalDate = crBalDate;
+    }
+
+    public Integer getCrBalAmount() {
+        return crBalAmount;
+    }
+
+    public void setCrBalAmount(Integer crBalAmount) {
+        this.crBalAmount = crBalAmount;
+    }
+
+    public Integer getPermCb() {
+        return permCb;
+    }
+
+    public void setPermCb(Integer permCb) {
+        this.permCb = permCb;
+    }
+
+    public Integer getPermOb() {
+        return permOb;
+    }
+
+    public void setPermOb(Integer permOb) {
+        this.permOb = permOb;
+    }
+
+    public Integer getNpsEc() {
+        return npsEc;
+    }
+
+    public void setNpsEc(Integer npsEc) {
+        this.npsEc = npsEc;
+    }
+
+    public Integer getNpsGc() {
+        return npsGc;
+    }
+
+    public void setNpsGc(Integer npsGc) {
+        this.npsGc = npsGc;
+    }
+
+    public Integer getWithholdAmt() {
+        return withholdAmt;
+    }
+
+    public void setWithholdAmt(Integer withholdAmt) {
+        this.withholdAmt = withholdAmt;
+    }
+
+    public Long getBaId() {
+        return baId;
+    }
+
+    public void setBaId(Long baId) {
+        this.baId = baId;
+    }
+
+    public Integer getEcsAmount() {
+        return ecsAmount;
+    }
+
+    public void setEcsAmount(Integer ecsAmount) {
+        this.ecsAmount = ecsAmount;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public Integer getTotalCredits() {
+        return totalCredits;
+    }
+
+    public void setTotalCredits(Integer totalCredits) {
+        this.totalCredits = totalCredits;
+    }
+
+    public Integer getFama() {
+        return fama;
+    }
+
+    public void setFama(Integer fama) {
+        this.fama = fama;
+    }
+
+    public Integer getCreditAdjustment() {
+        return creditAdjustment;
+    }
+
+    public void setCreditAdjustment(Integer creditAdjustment) {
+        this.creditAdjustment = creditAdjustment;
+    }
+
+    public Integer getTransferInAmount() {
+        return transferInAmount;
+    }
+
+    public void setTransferInAmount(Integer transferInAmount) {
+        this.transferInAmount = transferInAmount;
+    }
+
+    public Boolean getClosed() {
+        return closed;
+    }
+
+    public void setClosed(Boolean closed) {
+        this.closed = closed;
+    }
+
+    public String getRecordStatus() {
+        return recordStatus;
+    }
+
+    public void setRecordStatus(String recordStatus) {
+        this.recordStatus = recordStatus;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUnitCode() {
+        return unitCode;
+    }
+
+    public void setUnitCode(String unitCode) {
+        this.unitCode = unitCode;
+    }
+
+    public String getBankAccountNo() {
+        return bankAccountNo;
+    }
+
+    public void setBankAccountNo(String bankAccountNo) {
+        this.bankAccountNo = bankAccountNo;
+    }
+
+    public String getIfsc() {
+        return ifsc;
+    }
+
+    public void setIfsc(String ifsc) {
+        this.ifsc = ifsc;
+    }
+
+    public String getPayLevel() {
+        return payLevel;
+    }
+
+    public void setPayLevel(String payLevel) {
+        this.payLevel = payLevel;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    public Integer getNePaidAmount() {
+        return nePaidAmount;
+    }
+
+    public void setNePaidAmount(Integer nePaidAmount) {
+        this.nePaidAmount = nePaidAmount;
+    }
+
+    public String getEmployeeType() {
+        return employeeType;
+    }
+
+    public void setEmployeeType(String employeeType) {
+        this.employeeType = employeeType;
+    }
+
+    public Integer getFkUsr() {
+        return fkUsr;
+    }
+
+    public void setFkUsr(Integer fkUsr) {
+        this.fkUsr = fkUsr;
+    }
+
+    public Integer getClosingBalance() {
+        return closingBalance;
+    }
+
+    public void setClosingBalance(Integer closingBalance) {
+        this.closingBalance = closingBalance;
+    }
+
+    public Integer getMonthPay() {
+        return monthPay;
+    }
+
+    public void setMonthPay(Integer monthPay) {
+        this.monthPay = monthPay;
+    }
+
+    public Integer getOpeningBalance() {
+        return openingBalance;
+    }
+
+    public void setOpeningBalance(Integer openingBalance) {
+        this.openingBalance = openingBalance;
+    }
+
+    public Integer getNetPay() {
+        return netPay;
+    }
+
+    public void setNetPay(Integer netPay) {
+        this.netPay = netPay;
+    }
 }

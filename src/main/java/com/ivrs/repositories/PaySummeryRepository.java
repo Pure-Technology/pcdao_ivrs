@@ -14,4 +14,7 @@ public interface PaySummeryRepository extends JpaRepository<PaySummary, Long> {
     List<PaySummary> findByCdaoNoAndRecordStatus(@Param("cdaoNo") String cdaoNo, @Param("recordStatus") String recordStatus);
 
 
+    List<PaySummary> findByCdaoNoAndRecordStatusAndMonthEnding(@Param("cdaoNo") String cdaoNo,
+                                                               @Param("recordStatus") String recordStatus,
+                                                               @Param("monthEnding") String monthEnding);
 }

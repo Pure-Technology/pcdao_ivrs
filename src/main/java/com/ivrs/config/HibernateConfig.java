@@ -20,8 +20,8 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 @EnableJpaRepositories(
         basePackages = {"com.ivrs.repositories",},
-        entityManagerFactoryRef = "entityManagerFactory",
-        transactionManagerRef = "transactionManager"
+        entityManagerFactoryRef = "falconEntityManagerFactory",
+        transactionManagerRef = "falconTransactionManager"
 )
 public class HibernateConfig {
 
@@ -39,7 +39,7 @@ public class HibernateConfig {
     }
 
     @Primary
-    @Bean(name = "entityManagerFactory")
+    @Bean(name = "falconEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
             EntityManagerFactoryBuilder builder) {
         LocalContainerEntityManagerFactoryBean factoryBean = builder
@@ -64,9 +64,9 @@ public class HibernateConfig {
     }
 
     @Primary
-    @Bean(name = "transactionManager")
+    @Bean(name = "falconTransactionManager")
     public PlatformTransactionManager transactionManager(
-            @Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
+            @Qualifier("falconEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 
