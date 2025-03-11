@@ -2,9 +2,10 @@ package com.ivrs.DAO.impl;
 
 import com.ivrs.DAO.IvrsDao;
 import com.ivrs.DTO.*;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -13,11 +14,12 @@ import jakarta.persistence.EntityManagerFactory;
 import java.math.BigDecimal;
 
 @Repository
-@Slf4j
 public class IvrsDaoImpl implements IvrsDao {
 
+    private static final Logger log = LoggerFactory.getLogger(IvrsDaoImpl.class);
+
     @Autowired
-    @Qualifier("entityManagerFactory")
+    @Qualifier("falconEntityManagerFactory")
     private EntityManagerFactory entityManagerFactory;
 
     private SessionFactory getSessionFactory() {
@@ -30,10 +32,10 @@ public class IvrsDaoImpl implements IvrsDao {
             String closingBalanceQueryString = "SELECT closing_balance FROM fund_summary WHERE cda_no = :accNo";
             String subAmountQueryString = "SELECT sub_amount FROM fund_sub_refund WHERE cda_no = :accNo";
 
-            Integer closingBalance = session.createQuery(closingBalanceQueryString, Integer.class)
+            Integer closingBalance = session.createNativeQuery(closingBalanceQueryString, Integer.class)
                     .setParameter("accNo", accNo)
                     .uniqueResult();
-            Integer subscription = session.createQuery(subAmountQueryString, Integer.class)
+            Integer subscription = session.createNativeQuery(subAmountQueryString, Integer.class)
                     .setParameter("accNo", accNo)
                     .uniqueResult();
 
@@ -52,7 +54,7 @@ public class IvrsDaoImpl implements IvrsDao {
         try (Session session = getSessionFactory().openSession()) {
             String dsopWithdrawalQuery = "SELECT dp_sheet_date, amount_claimed, approval_amount, record_status FROM cbill_fund WHERE cdao_no = :accNo";
 
-            Object[] result = session.createQuery(dsopWithdrawalQuery, Object[].class)
+            Object[] result = session.createNativeQuery(dsopWithdrawalQuery, Object[].class)
                     .setParameter("accNo", accNo)
                     .uniqueResult();
 
@@ -73,7 +75,7 @@ public class IvrsDaoImpl implements IvrsDao {
         try (Session session = getSessionFactory().openSession()) {
             String query = "SELECT claim_date, amount_claimed, amount_passed, record_status FROM cbill_tada_ltc WHERE cdao_no = :accNo";
 
-            Object[] result = session.createQuery(query, Object[].class)
+            Object[] result = session.createNativeQuery(query, Object[].class)
                     .setParameter("accNo", accNo)
                     .uniqueResult();
 
@@ -92,7 +94,7 @@ public class IvrsDaoImpl implements IvrsDao {
     private boolean isRecordStatusD() {
         try (Session session = getSessionFactory().openSession()) {
             String statusQuery = "SELECT COUNT(*) FROM dak_d WHERE record_status = 'D'";
-            Long count = session.createQuery(statusQuery, Long.class).uniqueResult();
+            Long count = session.createNativeQuery(statusQuery, Long.class).uniqueResult();
             return count != null && count > 0;
         } catch (Exception e) {
             log.error("Exception while checking record status", e);
@@ -103,9 +105,9 @@ public class IvrsDaoImpl implements IvrsDao {
     @Override
     public LedgerClaimsResponseDTO getLedgerClaimsDetails(String accNo, LedgerClaimsResponseDTO responseDTO) {
         try (Session session = getSessionFactory().openSession()) {
-            String query = "SELECT ref_date, amount_claimed, amount_passed, record_status FROM cbill_medical WHERE cdao_no = :accNo";
+            String query = "SELECT payment_authority_date, amount_claimed, amount_passed, record_status FROM cbill_medical WHERE cdao_no = :accNo";
 
-            Object[] result = session.createQuery(query, Object[].class)
+            Object[] result = session.createNativeQuery(query, Object[].class)
                     .setParameter("accNo", accNo)
                     .uniqueResult();
 
@@ -124,9 +126,9 @@ public class IvrsDaoImpl implements IvrsDao {
     @Override
     public DOIIResponseDTO getDoIIDetails(String accNo, DOIIResponseDTO responseDTO) {
         try (Session session = getSessionFactory().openSession()) {
-            String do2Query = "SELECT d.do2_item_no, d.from_date, d.to_date, d.status, d.reason FROM do2 d WHERE d.acc_no = :accNo";
+            String do2Query = "SELECT do2_item_no, from_date, to_date, status, reason FROM do2  WHERE cdao_no = :accNo";
 
-            Object[] do2Result = session.createQuery(do2Query, Object[].class)
+            Object[] do2Result = session.createNativeQuery(do2Query, Object[].class)
                     .setParameter("accNo", accNo)
                     .uniqueResult();
 
@@ -138,8 +140,8 @@ public class IvrsDaoImpl implements IvrsDao {
                 responseDTO.setReason(String.valueOf(do2Result[4]));
             }
 
-            String arrearQuery = "SELECT a.amount FROM arrear a WHERE a.cdao_no = :cdaoNo";
-            Integer amountPassed = session.createQuery(arrearQuery, Integer.class)
+            String arrearQuery = "SELECT amount FROM arrear  WHERE cdao_no = :cdaoNo";
+            Integer amountPassed = session.createNativeQuery(arrearQuery, Integer.class)
                     .setParameter("cdaoNo", accNo)
                     .uniqueResult();
 
@@ -155,16 +157,16 @@ public class IvrsDaoImpl implements IvrsDao {
     @Override
     public IncomeTaxResponseDTO getIncomeTaxDetails(String cdaoNo, IncomeTaxResponseDTO responseDTO) {
         try (Session session = getSessionFactory().openSession()) {
-            String itRecoveryQuery = "SELECT i.it_recovery_amount FROM it_recovery i WHERE i.cdao_no = :cdaoNo";
-            BigDecimal itRecoveryAmount = session.createQuery(itRecoveryQuery, BigDecimal.class)
+            String itRecoveryQuery = "SELECT it_recovery_amount FROM it_recovery  WHERE cdao_no = :cdaoNo";
+            BigDecimal itRecoveryAmount = session.createNativeQuery(itRecoveryQuery, BigDecimal.class)
                     .setParameter("cdaoNo", cdaoNo)
                     .uniqueResult();
             if (itRecoveryAmount != null) {
                 responseDTO.setItRecovery(itRecoveryAmount.toString());
             }
 
-            String taxAssessmentQuery = "SELECT t.total_tax_deducted FROM tax_assessment t WHERE t.cdao_no = :cdaoNo";
-            BigDecimal totalTaxDeducted = session.createQuery(taxAssessmentQuery, BigDecimal.class)
+            String taxAssessmentQuery = "SELECT total_tax_deducted FROM tax_assessment  WHERE cdao_no = :cdaoNo";
+            BigDecimal totalTaxDeducted = session.createNativeQuery(taxAssessmentQuery, BigDecimal.class)
                     .setParameter("cdaoNo", cdaoNo)
                     .uniqueResult();
             if (totalTaxDeducted != null) {

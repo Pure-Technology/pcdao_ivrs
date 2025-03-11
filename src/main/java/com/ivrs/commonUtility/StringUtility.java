@@ -124,7 +124,6 @@ public class StringUtility {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm:ss");
             formattedDate = createdOn.format(formatter);
         } catch (Exception e) {
-            log.error("Exception while formatting created on date", e);
         }
         return formattedDate;
     }
