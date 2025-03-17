@@ -9,4 +9,5 @@ public interface IvrsDao {
     LedgerClaimsResponseDTO getLedgerClaimsDetails(String accNo ,LedgerClaimsResponseDTO responseDTO);
     DOIIResponseDTO getDoIIDetails(String accNo, DOIIResponseDTO responseDTO);
     IncomeTaxResponseDTO getIncomeTaxDetails(String accNo,IncomeTaxResponseDTO responseDTO);
+    DOIIResponseDTO getDoIIDetails(String accNo, DOIIResponseDTO responseDTO, DOIIRequestDTO doiiRequestDTO);
 }

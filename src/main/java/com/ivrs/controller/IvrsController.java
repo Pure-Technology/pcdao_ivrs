@@ -1,5 +1,6 @@
 package com.ivrs.controller;
 
+import com.ivrs.DTO.DOIIRequestDTO;
 import com.ivrs.DTO.RequestDTO;
 import com.ivrs.service.IvrsService;
 import lombok.extern.slf4j.Slf4j;
@@ -33,4 +34,16 @@ public class IvrsController {
       }
       return ResponseEntity.status(HttpStatus.OK).body(response);
   }
+
+    @PostMapping("/getDOIIDetails")
+    public ResponseEntity<Object> getDOIIDetails(@RequestBody DOIIRequestDTO requestDTO){
+        Object response = null;
+        try{
+            response = ivrsService.getCustomerDetails(requestDTO);
+        }catch (Exception e){
+            logger.error("Exception while retrieving data");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something Went Wrong");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }
