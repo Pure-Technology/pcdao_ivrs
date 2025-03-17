@@ -33,4 +33,20 @@ public class PcdaoDaoImpl implements PcdaoDao {
         }
         return cdaAccNo;
     }
+
+    @Override
+    public boolean validateUser(String phoneNo, Long tPin) {
+        boolean exists = false;
+        try (Session session = getSessionFactory().openSession()) {
+            String query = "SELECT EXISTS (SELECT 1 FROM pcda_ivrs_register WHERE phone_no = :phoneNo AND tpin = :tPin)";
+            exists = (boolean) session.createNativeQuery(query)
+                    .setParameter("phoneNo", phoneNo)
+                    .setParameter("tPin", tPin)
+                    .uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return exists;
+    }
+
 }
