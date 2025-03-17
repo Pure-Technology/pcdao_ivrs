@@ -100,9 +100,9 @@ public class IvrsServiceImpl implements IvrsService {
                             year = requestDTO.getYear();
                             if(!StringUtility.isNullOrEmptyString(month) && StringUtility.isNullOrEmptyString(year)){
                                 year = getCurrentYear();
-                                monthYearForSalary = month.concat(year);
+                                monthYearForSalary = month.concat("/").concat(year);
                             } else if (!StringUtility.isNullOrEmptyString(month) && !StringUtility.isNullOrEmptyString(year)) {
-                                monthYearForSalary = month.concat(year);
+                                monthYearForSalary = month.concat("/").concat(year);
                             }
                             responseDTO = getSalaryDetails(cdaAccNo,monthYearForSalary);
                             break;
@@ -137,9 +137,17 @@ public class IvrsServiceImpl implements IvrsService {
         return responseDTO;
     }
 
+    @Override
+    public Object getCustomerDetails(DOIIRequestDTO requestDTO) {
+        Object responseDTO = null;
+        String cdaAccNo = pcdaoDao.getCdaAccNo(requestDTO.getCustomerNumber());
+        responseDTO = getDo2Details(cdaAccNo, requestDTO);
+        return responseDTO;
+    }
+
     private String getCurrentYear() {
         Date date = new Date();
-        SimpleDateFormat sd = new SimpleDateFormat("yy");
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy");
         return sd.format(date);
     }
 
@@ -149,6 +157,16 @@ public class IvrsServiceImpl implements IvrsService {
             responseDTO = ivrsDao.getIncomeTaxDetails(cdaAccNo, responseDTO);
         } catch (Exception e) {
             logger.error("Exception while getting Income Tax details for cda account no : ".concat(cdaAccNo), e);
+        }
+        return responseDTO;
+    }
+
+    private Object getDo2Details(String cdaAccNo, DOIIRequestDTO doiiRequestDTO) {
+        DOIIResponseDTO responseDTO = new DOIIResponseDTO();
+        try {
+            responseDTO = ivrsDao.getDoIIDetails(cdaAccNo, responseDTO, doiiRequestDTO);
+        } catch (Exception e) {
+            logger.error("Exception while getting DO II details for cda account no : ".concat(cdaAccNo), e);
         }
         return responseDTO;
     }

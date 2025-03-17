@@ -177,4 +177,46 @@ public class IvrsDaoImpl implements IvrsDao {
         }
         return responseDTO;
     }
+
+    @Override
+    public DOIIResponseDTO getDoIIDetails(String accNo, DOIIResponseDTO responseDTO, DOIIRequestDTO doiiRequestDTO) {
+        try (Session session = getSessionFactory().openSession()) {
+//            String do2Query = "SELECT do2_item_no, from_date, to_date, status, reason FROM do2 " +
+//                                    "WHERE CAST(EXTRACT(YEAR FROM do2_date) AS VARCHAR) = :do2year " +
+//                    "AND do2_no = :do2_no";
+
+            String do2Query = "SELECT do2_item_no, from_date, to_date, status, reason " +
+                    "FROM do2 " +
+                    "WHERE TO_CHAR(do2_date, 'YYYY') = :do2year " +
+                    "AND do2_no = :do2_no";
+
+            Object[] do2Result = session.createNativeQuery(do2Query, Object[].class)
+                    .setParameter("do2year", doiiRequestDTO.getdO2Year())
+                    .setParameter("do2_no", String.valueOf(doiiRequestDTO.getdO2No()))
+                    .uniqueResult();
+
+            if (do2Result != null) {
+                responseDTO.setCasualty(String.valueOf(do2Result[0]));
+                responseDTO.setFromDate(String.valueOf(do2Result[1]));
+                responseDTO.setToDate(String.valueOf(do2Result[2]));
+                responseDTO.setStatus(String.valueOf(do2Result[3]));
+                responseDTO.setReason(String.valueOf(do2Result[4]));
+            }
+
+            String arrearQuery = "SELECT amount FROM arrear " +
+                                    "WHERE cdao_no = :cdaoNo " +
+                                    "AND TO_CHAR(do2_date, 'YYYY') = :do2year";
+            Integer amountPassed = session.createNativeQuery(arrearQuery, Integer.class)
+                    .setParameter("cdaoNo", accNo)
+                    .setParameter("do2year", doiiRequestDTO.getdO2Year())
+                    .uniqueResult();
+
+            if (amountPassed != null) {
+                responseDTO.setAmountPassed(String.valueOf(amountPassed));
+            }
+        } catch (Exception e) {
+            log.error("Exception while getting DO II details from database", e);
+        }
+        return responseDTO;
+    }
 }
