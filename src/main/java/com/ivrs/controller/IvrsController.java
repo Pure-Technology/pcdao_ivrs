@@ -67,4 +67,14 @@ public class IvrsController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PostMapping("/deactivate-session/{mobileNumber}")
+    public ResponseEntity<?> deActiveateSession(@PathVariable String mobileNumber) {
+        if (mobileNumber != null) {
+            sessionManager.removeSession(mobileNumber);
+            return ResponseEntity.ok("Session Deacruvated successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid sessions..");
+        }
+    }
 }
