@@ -178,12 +178,11 @@ public class IvrsDaoImpl implements IvrsDao {
         return responseDTO;
     }
 
+
+    //add casuality no logic here
     @Override
-    public DOIIResponseDTO getDoIIDetails(String accNo, DOIIResponseDTO responseDTO, DOIIRequestDTO doiiRequestDTO) {
+    public DOIIResponseDTO getDoIIDetails(String cdaAccNo, DOIIResponseDTO responseDTO,String casualityNo, String dO2No,String dO2Year) {
         try (Session session = getSessionFactory().openSession()) {
-//            String do2Query = "SELECT do2_item_no, from_date, to_date, status, reason FROM do2 " +
-//                                    "WHERE CAST(EXTRACT(YEAR FROM do2_date) AS VARCHAR) = :do2year " +
-//                    "AND do2_no = :do2_no";
 
             String do2Query = "SELECT do2_item_no, from_date, to_date, status, reason " +
                     "FROM do2 " +
@@ -191,8 +190,8 @@ public class IvrsDaoImpl implements IvrsDao {
                     "AND do2_no = :do2_no";
 
             Object[] do2Result = session.createNativeQuery(do2Query, Object[].class)
-                    .setParameter("do2year", doiiRequestDTO.getdO2Year())
-                    .setParameter("do2_no", String.valueOf(doiiRequestDTO.getdO2No()))
+                    .setParameter("do2year", dO2Year)
+                    .setParameter("do2_no", String.valueOf(dO2No))
                     .uniqueResult();
 
             if (do2Result != null) {
@@ -207,8 +206,8 @@ public class IvrsDaoImpl implements IvrsDao {
                                     "WHERE cdao_no = :cdaoNo " +
                                     "AND TO_CHAR(do2_date, 'YYYY') = :do2year";
             Integer amountPassed = session.createNativeQuery(arrearQuery, Integer.class)
-                    .setParameter("cdaoNo", accNo)
-                    .setParameter("do2year", doiiRequestDTO.getdO2Year())
+                    .setParameter("cdaoNo", cdaAccNo)
+                    .setParameter("do2year", dO2Year)
                     .uniqueResult();
 
             if (amountPassed != null) {

@@ -8,5 +8,5 @@ public interface IvrsService {
 
     Object getCustomerDetails(RequestDTO requestDTO);
 
-    Object getCustomerDetails(DOIIRequestDTO requestDTO);
+//    Object getCustomerDetails(DOIIRequestDTO requestDTO);
 }

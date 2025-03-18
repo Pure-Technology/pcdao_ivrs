@@ -81,6 +81,9 @@ public class IvrsServiceImpl implements IvrsService {
         String date = "";
         String cdaAccNo = "";
         Object responseDTO = null;
+        String dO2No = "";
+        String dO2Year = "";
+        String casualityNo = "";
         try {
 
             serviceType = requestDTO.getServiceType();
@@ -119,7 +122,17 @@ public class IvrsServiceImpl implements IvrsService {
                             responseDTO = getLedgerClaimDetails(cdaAccNo);
                             break;
                         case DO2_DETAILS:
-                            responseDTO = getDo2Details(cdaAccNo);
+                            //for second condition of do II details
+                            if(!StringUtility.isNullOrEmptyString(requestDTO.getCasualtyNo().toString()) && !StringUtility.isNullOrEmptyString(requestDTO.getDO2No().toString())
+                            && !StringUtility.isNullOrEmptyString(requestDTO.getDO2Year().toString())){
+                                casualityNo = requestDTO.getCustomerNumber();
+                                dO2No = requestDTO.getDO2No();
+                                dO2Year = requestDTO.getDO2Year();
+                                responseDTO = getDo2DetailsFor2ndCondition(cdaAccNo ,casualityNo,dO2No,dO2Year);
+                            }else{
+                                //for first condition
+                                responseDTO = getDo2Details(cdaAccNo);
+                            }
                             break;
                         case INCOME_TAX:
                             responseDTO = getIncomeTaxDetails(cdaAccNo);
@@ -137,13 +150,23 @@ public class IvrsServiceImpl implements IvrsService {
         return responseDTO;
     }
 
-    @Override
-    public Object getCustomerDetails(DOIIRequestDTO requestDTO) {
-        Object responseDTO = null;
-        String cdaAccNo = pcdaoDao.getCdaAccNo(requestDTO.getCustomerNumber());
-        responseDTO = getDo2Details(cdaAccNo, requestDTO);
+    private Object getDo2DetailsFor2ndCondition(String cdaAccNo, String casualityNo, String dO2No, String dO2Year) {
+        DOIIResponseDTO responseDTO = new DOIIResponseDTO();
+        try {
+            responseDTO = ivrsDao.getDoIIDetails(cdaAccNo, responseDTO,casualityNo,dO2No,dO2Year);
+        } catch (Exception e) {
+            logger.error("Exception while getting DO II details for cda account no : ".concat(cdaAccNo), e);
+        }
         return responseDTO;
     }
+
+//    @Override
+//    public Object getCustomerDetails(DOIIRequestDTO requestDTO) {
+//        Object responseDTO = null;
+//        String cdaAccNo = pcdaoDao.getCdaAccNo(requestDTO.getCustomerNumber());
+//        responseDTO = getDo2Details(cdaAccNo, requestDTO);
+//        return responseDTO;
+//    }
 
     private String getCurrentYear() {
         Date date = new Date();
@@ -161,15 +184,15 @@ public class IvrsServiceImpl implements IvrsService {
         return responseDTO;
     }
 
-    private Object getDo2Details(String cdaAccNo, DOIIRequestDTO doiiRequestDTO) {
-        DOIIResponseDTO responseDTO = new DOIIResponseDTO();
-        try {
-            responseDTO = ivrsDao.getDoIIDetails(cdaAccNo, responseDTO, doiiRequestDTO);
-        } catch (Exception e) {
-            logger.error("Exception while getting DO II details for cda account no : ".concat(cdaAccNo), e);
-        }
-        return responseDTO;
-    }
+//    private Object getDo2Details(String cdaAccNo, DOIIRequestDTO doiiRequestDTO) {
+//        DOIIResponseDTO responseDTO = new DOIIResponseDTO();
+//        try {
+//            responseDTO = ivrsDao.getDoIIDetails(cdaAccNo, responseDTO, doiiRequestDTO);
+//        } catch (Exception e) {
+//            logger.error("Exception while getting DO II details for cda account no : ".concat(cdaAccNo), e);
+//        }
+//        return responseDTO;
+//    }
 
     private Object getDo2Details(String cdaAccNo) {
         DOIIResponseDTO responseDTO = new DOIIResponseDTO();
