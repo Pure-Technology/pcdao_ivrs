@@ -116,18 +116,26 @@ public class IvrsServiceImpl implements IvrsService {
                             responseDTO = getDSOPWithdrawalDetails(cdaAccNo);
                             break;
                         case TRANSPORTATION_CLAIMS:
-                            responseDTO = getTransportationClaimDetails(cdaAccNo);
+                            date = requestDTO.getDate();
+                            month = requestDTO.getMonth();
+                            year = requestDTO.getYear();
+                            if(!StringUtility.isNullOrEmptyString(year) && !StringUtility.isNullOrEmptyString(month) &&
+                                    !StringUtility.isNullOrEmptyString(date)){
+                                responseDTO = getTransportationClaimDetails(cdaAccNo, requestDTO);
+                            }else{
+                                responseDTO = getTransportationClaimDetails(cdaAccNo);
+                            }
                             break;
                         case LEDGER_CLAIMS:
                             responseDTO = getLedgerClaimDetails(cdaAccNo);
                             break;
                         case DO2_DETAILS:
                             //for second condition of do II details
-                            if(!StringUtility.isNullOrEmptyString(requestDTO.getCasualtyNo().toString()) && !StringUtility.isNullOrEmptyString(requestDTO.getDO2No().toString())
-                            && !StringUtility.isNullOrEmptyString(requestDTO.getDO2Year().toString())){
-                                casualityNo = requestDTO.getCustomerNumber();
-                                dO2No = requestDTO.getDO2No();
-                                dO2Year = requestDTO.getDO2Year();
+                            if(!StringUtility.isNullOrEmptyString(requestDTO.getCasualtyNo()) && !StringUtility.isNullOrEmptyString(requestDTO.getdO2No())
+                            && !StringUtility.isNullOrEmptyString(requestDTO.getdO2Year())){
+                                casualityNo = requestDTO.getCasualtyNo();
+                                dO2No = requestDTO.getdO2No();
+                                dO2Year = requestDTO.getdO2Year();
                                 responseDTO = getDo2DetailsFor2ndCondition(cdaAccNo ,casualityNo,dO2No,dO2Year);
                             }else{
                                 //for first condition
@@ -218,6 +226,16 @@ public class IvrsServiceImpl implements IvrsService {
         TransportClaimsResponseDTO responseDTO = new TransportClaimsResponseDTO();
         try {
             responseDTO = ivrsDao.getTransportClaimsDetails(cdaAccNo, responseDTO);
+        } catch (Exception e) {
+            logger.error("Exception while getting Transportation Claims details for cda account no : ".concat(cdaAccNo), e);
+        }
+        return responseDTO;
+    }
+
+    private Object getTransportationClaimDetails(String cdaAccNo, RequestDTO requestDTO) {
+        TransportClaimsResponseDTO responseDTO = new TransportClaimsResponseDTO();
+        try {
+            responseDTO = ivrsDao.getTransportClaimsDetailsCondition2(cdaAccNo, responseDTO, requestDTO);
         } catch (Exception e) {
             logger.error("Exception while getting Transportation Claims details for cda account no : ".concat(cdaAccNo), e);
         }

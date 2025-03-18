@@ -91,6 +91,32 @@ public class IvrsDaoImpl implements IvrsDao {
         return responseDTO;
     }
 
+    @Override
+    public TransportClaimsResponseDTO getTransportClaimsDetailsCondition2(String accNo, TransportClaimsResponseDTO responseDTO, RequestDTO requestDTO) {
+        String claimDate =  requestDTO.getYear() + "-" + String.format("%02d", Integer.parseInt(requestDTO.getMonth())) + "-" + String.format("%02d", Integer.parseInt(requestDTO.getDate()));
+        try (Session session = getSessionFactory().openSession()) {
+            String query = "SELECT claim_date, amount_claimed, amount_passed, record_status " +
+                                   "FROM cbill_tada_ltc " +
+                                   "WHERE cdao_no = :accNo " +
+                                   "AND claim_date = TO_DATE(:claimDate, 'YYYY-MM-DD')";
+
+            Object[] result = session.createNativeQuery(query, Object[].class)
+                    .setParameter("accNo", accNo)
+                    .setParameter("claimDate", claimDate)
+                    .uniqueResult();
+
+            if (result != null) {
+                responseDTO.setClaimDate(String.valueOf(result[0]));
+                responseDTO.setAmountClaimed(String.valueOf(result[1]));
+                responseDTO.setAmountPassed(String.valueOf(result[2]));
+                responseDTO.setStatus(isRecordStatusD() ? "D" : String.valueOf(result[3]));
+            }
+        } catch (Exception e) {
+            log.error("Exception while getting transport claims details from database", e);
+        }
+        return responseDTO;
+    }
+
     private boolean isRecordStatusD() {
         try (Session session = getSessionFactory().openSession()) {
             String statusQuery = "SELECT COUNT(*) FROM dak_d WHERE record_status = 'D'";
@@ -187,11 +213,13 @@ public class IvrsDaoImpl implements IvrsDao {
             String do2Query = "SELECT do2_item_no, from_date, to_date, status, reason " +
                     "FROM do2 " +
                     "WHERE TO_CHAR(do2_date, 'YYYY') = :do2year " +
-                    "AND do2_no = :do2_no";
+                    "AND do2_no = :do2_no " +
+                    "AND do2_item_no =:casualtyNO";
 
             Object[] do2Result = session.createNativeQuery(do2Query, Object[].class)
                     .setParameter("do2year", dO2Year)
                     .setParameter("do2_no", String.valueOf(dO2No))
+                    .setParameter("casualtyNO", casualityNo)
                     .uniqueResult();
 
             if (do2Result != null) {
@@ -203,11 +231,9 @@ public class IvrsDaoImpl implements IvrsDao {
             }
 
             String arrearQuery = "SELECT amount FROM arrear " +
-                                    "WHERE cdao_no = :cdaoNo " +
-                                    "AND TO_CHAR(do2_date, 'YYYY') = :do2year";
+                                    "WHERE cdao_no = :cdaoNo";
             Integer amountPassed = session.createNativeQuery(arrearQuery, Integer.class)
                     .setParameter("cdaoNo", cdaAccNo)
-                    .setParameter("do2year", dO2Year)
                     .uniqueResult();
 
             if (amountPassed != null) {

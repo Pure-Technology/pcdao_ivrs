@@ -10,5 +10,6 @@ public interface IvrsDao {
     DOIIResponseDTO getDoIIDetails(String accNo, DOIIResponseDTO responseDTO);
     IncomeTaxResponseDTO getIncomeTaxDetails(String accNo,IncomeTaxResponseDTO responseDTO);
     DOIIResponseDTO getDoIIDetails(String cdaAccNo, DOIIResponseDTO responseDTO,String casualityNo, String dO2No,String dO2Year);
+    TransportClaimsResponseDTO getTransportClaimsDetailsCondition2(String accNo, TransportClaimsResponseDTO responseDTO, RequestDTO requestDTO);
 
 }
