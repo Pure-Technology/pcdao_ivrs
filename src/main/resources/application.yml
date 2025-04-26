@@ -1,6 +1,11 @@
 server:
   port: 8000
 
+logging:
+  level:
+    com.ivrs: DEBUG
+
+
 spring:
   application:
     name: Reference-Data-Application-Service
@@ -52,3 +57,4 @@ spring:
         ddl-auto: update
         show-sql: true
         format_sql: true
+

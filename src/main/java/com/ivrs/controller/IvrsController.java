@@ -45,6 +45,7 @@ public class IvrsController {
         if (!sessionManager.isSessionActive(requestDTO.getCustomerNumber())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Unauthorized access");
         }
+        logger.warn("started for running for getDetails api's");
         Object response = null;
         try{
            response = ivrsService.getCustomerDetails(requestDTO);
