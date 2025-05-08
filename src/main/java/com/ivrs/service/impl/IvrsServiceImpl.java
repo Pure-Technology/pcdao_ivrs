@@ -58,19 +58,19 @@ public class IvrsServiceImpl implements IvrsService {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    public Object getUserDetails(RequestDTO requestDTO) {
-        logger.info("Request received for customer number: {}", requestDTO.getCustomerNumber()); // Log the request
-
-        Optional<UserAuth> userAuth = this.userAuthRepository.findByMobileNumber(requestDTO.getCustomerNumber());
-
-        if (userAuth.isPresent()) {
-            logger.info("Customer found for mobile number: {}", requestDTO.getCustomerNumber()); // Log when customer is found
-            return userAuth;
-        } else {
-            logger.warn("Customer not found for mobile number: {}", requestDTO.getCustomerNumber()); // Log when no customer is found
-            throw new CustomerNotFoundException("Customer not found for mobile number: " + requestDTO.getCustomerNumber()); // Throw custom exception
-        }
-    }
+//    public Object getUserDetails(RequestDTO requestDTO) {
+//        logger.info("Request received for customer number: {}", requestDTO.getCustomerNumber()); // Log the request
+//
+//        Optional<UserAuth> userAuth = this.userAuthRepository.findByMobileNumber(requestDTO.getCustomerNumber());
+//
+//        if (userAuth.isPresent()) {
+//            logger.info("Customer found for mobile number: {}", requestDTO.getCustomerNumber()); // Log when customer is found
+//            return userAuth;
+//        } else {
+//            logger.warn("Customer not found for mobile number: {}", requestDTO.getCustomerNumber()); // Log when no customer is found
+//            throw new CustomerNotFoundException("Customer not found for mobile number: " + requestDTO.getCustomerNumber()); // Throw custom exception
+//        }
+//    }
 
     @Override
     public Object getCustomerDetails(RequestDTO requestDTO) {
@@ -87,14 +87,13 @@ public class IvrsServiceImpl implements IvrsService {
         try {
 
             serviceType = requestDTO.getServiceType();
-            customerNumber = requestDTO.getCustomerNumber();
+            cdaAccNo = requestDTO.getCdacNo();
             month = requestDTO.getMonth();
             year = requestDTO.getYear();
             date = requestDTO.getDate();
-            if (!StringUtility.isNullOrEmptyString(customerNumber)) {
 //                cdaAccNo = userAuthRepository.getCdaAccNumberBasedOnMobileNum(customerNumber);
-                 cdaAccNo=  pcdaoDao.getCdaAccNo(customerNumber);
-                if (!StringUtility.isNullOrEmptyString(cdaAccNo)) {
+//                 cdaAccNo=  pcdaoDao.getCdaAccNo(customerNumber);
+            if (!StringUtility.isNullOrEmptyString(cdaAccNo)) {
                     CommonEnum serviceEnum = getServiceEnumFromString(serviceType);
                     switch (serviceEnum) {
                         case SALARY:
@@ -146,11 +145,8 @@ public class IvrsServiceImpl implements IvrsService {
                             responseDTO = getIncomeTaxDetails(cdaAccNo);
                             break;
                     }
-                } else {
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CDA Account Not Found");
-                }
             } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mobile Number is Not Register, Kindly contact to PCDA office to Register your mobile number");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CDA Account Not Found");
             }
         } catch (Exception e) {
             logger.error("Exception while getting customer details for service : ".concat(requestDTO.getServiceType()), e);

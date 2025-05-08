@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class RequestDTO {
     private String serviceType;
-    private String customerNumber;
+    private String cdacNo;
     private String month;
     private String year;
     private String date;
@@ -23,8 +23,8 @@ public class RequestDTO {
         return serviceType;
     }
 
-    public String getCustomerNumber() {
-        return customerNumber;
+    public String getCdacNo() {
+        return cdacNo;
     }
 
     public String getMonth() {
