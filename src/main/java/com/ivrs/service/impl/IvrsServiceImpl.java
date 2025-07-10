@@ -75,7 +75,6 @@ public class IvrsServiceImpl implements IvrsService {
     @Override
     public Object getCustomerDetails(RequestDTO requestDTO) {
         String serviceType = "";
-        String customerNumber = "";
         String month = "";
         String year = "";
         String date = "";
@@ -130,8 +129,9 @@ public class IvrsServiceImpl implements IvrsService {
                             break;
                         case DO2_DETAILS:
                             //for second condition of do II details
-                            if(!StringUtility.isNullOrEmptyString(requestDTO.getCasualtyNo()) && !StringUtility.isNullOrEmptyString(requestDTO.getdO2No())
-                            && !StringUtility.isNullOrEmptyString(requestDTO.getdO2Year())){
+                            if(!StringUtility.isNullOrEmptyString(requestDTO.getCasualtyNo()) &&
+                                    !StringUtility.isNullOrEmptyString(requestDTO.getdO2No()) &&
+                                    !StringUtility.isNullOrEmptyString(requestDTO.getdO2Year())){
                                 casualityNo = requestDTO.getCasualtyNo();
                                 dO2No = requestDTO.getdO2No();
                                 dO2Year = requestDTO.getdO2Year();
@@ -164,14 +164,6 @@ public class IvrsServiceImpl implements IvrsService {
         return responseDTO;
     }
 
-//    @Override
-//    public Object getCustomerDetails(DOIIRequestDTO requestDTO) {
-//        Object responseDTO = null;
-//        String cdaAccNo = pcdaoDao.getCdaAccNo(requestDTO.getCustomerNumber());
-//        responseDTO = getDo2Details(cdaAccNo, requestDTO);
-//        return responseDTO;
-//    }
-
     private String getCurrentYear() {
         Date date = new Date();
         SimpleDateFormat sd = new SimpleDateFormat("yyyy");
@@ -188,15 +180,6 @@ public class IvrsServiceImpl implements IvrsService {
         return responseDTO;
     }
 
-//    private Object getDo2Details(String cdaAccNo, DOIIRequestDTO doiiRequestDTO) {
-//        DOIIResponseDTO responseDTO = new DOIIResponseDTO();
-//        try {
-//            responseDTO = ivrsDao.getDoIIDetails(cdaAccNo, responseDTO, doiiRequestDTO);
-//        } catch (Exception e) {
-//            logger.error("Exception while getting DO II details for cda account no : ".concat(cdaAccNo), e);
-//        }
-//        return responseDTO;
-//    }
 
     private Object getDo2Details(String cdaAccNo) {
         DOIIResponseDTO responseDTO = new DOIIResponseDTO();
@@ -290,9 +273,10 @@ public class IvrsServiceImpl implements IvrsService {
 
 
         public Optional<Earning> getLatestEarning(String cdacNo, Integer fkPayCode, String monthYear){
-            Optional<Employee> employee = employeeRepository.findByCdaoNo(cdacNo);
-            if (employee.isPresent()) {
-                List<Earning> earnings = earningRepository.findByFkEmployeeAndFkPayCodeAndMonthEnding(employee.get().getId(), fkPayCode, monthYear);
+            List<Employee> employees = employeeRepository.findByCdaoNo(cdacNo);
+            if (!employees.isEmpty()) {
+                Employee employee = employees.get(0);
+                List<Earning> earnings = earningRepository.findByFkEmployeeAndFkPayCodeAndMonthEnding(employee.getId(), fkPayCode, monthYear);
 
                 return earnings.stream()
                         .max(Comparator.comparing(Earning::getId));

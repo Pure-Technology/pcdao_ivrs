@@ -3,9 +3,10 @@ package com.ivrs.repositories;
 import com.ivrs.entities.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-    Optional<Employee> findByCdaoNo(String cdaoNo);
+    List<Employee> findByCdaoNo(String cdacNo);
 }
